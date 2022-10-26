@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Jobs {
+  id          Int       @id @default(autoincrement())
+  state       String    @default("QUEUED")
+  priority    Int       @default(10)
+  description String?
+  completed   Boolean   @default(false)
+  beginAt     DateTime?
+  finishAt    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// sqlite は enum 未サポート
+// enum State {
+//   QUEUED
+//   RUNNING
+//   COLPETED
+//   DELETED
+// }
